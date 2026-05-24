@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sai Logistic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{--blue:#159eea;--navy:#061b45;--navy2:#0b2e6e;--bg:#eef5fb;--text:#16395f;--white:#fff;--card:#ffffff;}
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:#f7fbff}
+    img{max-width:100%;display:block}
+    .card{overflow:hidden}
+    .card img{display:block;max-width:100%;box-sizing:border-box}
+    .container{width:min(1220px,92%);margin:0 auto}
+    header{position:sticky;top:0;z-index:20;background:linear-gradient(90deg,#168fc5,#2ca8d5);box-shadow:0 2px 18px rgba(0,0,0,.10)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .nav img{height:78px;width:auto;border-radius:26px;background:#fff;padding:9px;box-shadow:0 8px 22px rgba(0,0,0,.12)}
+    .menu{display:flex;gap:38px;align-items:center;font-weight:800}
+    .menu a{color:#fff;text-decoration:none;font-size:18px}
+    .lang{border:1px solid rgba(255,255,255,.32);color:#fff;border-radius:18px;padding:14px 18px;font-weight:800;background:transparent;cursor:pointer;font-family:inherit;font-size:18px}
+    .language-switch{display:flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.32);border-radius:18px;padding:6px;background:rgba(255,255,255,.08)}
+    .lang-btn{border:0;background:transparent;color:#fff;border-radius:12px;padding:8px 10px;font-weight:900;cursor:pointer;font-family:inherit;font-size:15px}
+    .lang-btn.active{background:#fff;color:#0b4f7d}
+    @media (max-width:760px){.language-switch{padding:4px}.lang-btn{font-size:13px;padding:7px 9px}}
+
+.hero{position:relative;min-height:88vh;background:linear-gradient(rgba(6,25,67,.55),rgba(6,25,67,.55)),url('assets/warehouse.png') center/cover no-repeat;display:flex;align-items:center;text-align:center;color:#fff}
+    .welcome{font-size:clamp(36px,5vw,64px);font-weight:400;opacity:.98;margin:0 0 10px}
+    .hero h1{font-size:clamp(62px,11vw,150px);line-height:.95;margin:0;color:#fff;font-weight:900;text-shadow:0 8px 18px rgba(0,0,0,.18)}
+    .hero p{font-size:clamp(22px,2.4vw,34px);margin:18px 0 34px}
+    .actions{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+    .btn{padding:22px 44px;border-radius:20px;font-weight:900;text-decoration:none;font-size:20px;display:inline-block}
+    .btn-primary{background:#18a5e7;color:#fff}.btn-secondary{background:#fff;color:#0b4f7d}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;margin-top:48px}
+    .stat{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.24);backdrop-filter:blur(10px);padding:28px;border-radius:24px}
+    .stat .num{font-size:56px;font-weight:900;color:#fff}.stat .label{font-size:24px;font-weight:800;color:#e6f5ff}
+
+    section{padding:90px 0}.section-light{background:#eef5fb}.section-white{background:#fff}
+    .section-tag{display:inline-block;background:#d8eefb;color:#0b4f7d;padding:14px 24px;border-radius:999px;font-weight:800;margin-bottom:18px}
+    .section-title{text-align:center;color:#0b4f7d;font-size:clamp(34px,5vw,72px);margin:0 0 12px;font-weight:900}
+    .section-sub{text-align:center;font-size:clamp(20px,2vw,30px);margin:0 0 46px}
+
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:34px}
+    .cards.four{grid-template-columns:repeat(4,1fr)}
+    .card{background:#fff;border-radius:30px;overflow:hidden;box-shadow:0 10px 25px rgba(13,54,88,.12);border:1px solid #dce7f0}
+    .card img{width:100%;height:300px;object-fit:contain;object-position:center;background:#061b45;padding:0;border-radius:0}
+    .card-body{padding:28px}
+    .card h3{margin:0 0 18px;color:#0b4f7d;font-size:26px;line-height:1.2}
+    .card p{margin:0;font-size:18px;line-height:1.7}
+
+    .banner{border-radius:36px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.16);margin-bottom:38px}
+    .banner img{width:100%;height:auto;object-fit:contain;background:#061b45}
+
+    .about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+    .about-title{font-size:clamp(42px,5.5vw,86px);line-height:.98;color:#0b4f7d;margin:0 0 26px;font-weight:900}
+    .about-copy p{font-size:20px;line-height:1.8;margin:0 0 22px}
+    .about-panel{background:#fff;border-radius:38px;padding:26px;box-shadow:0 10px 25px rgba(13,54,88,.12)}
+    .about-panel img{border-radius:28px;height:420px;width:100%;object-fit:cover}
+    .about-mini{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:18px}
+    .mini{padding:28px;border-radius:22px;color:#fff;text-align:center;font-weight:800}.mini.dark{background:#0b4f7d}.mini.light{background:#159eea}
+
+    .why{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}.why .item{background:#fff;border-radius:28px;padding:30px;box-shadow:0 10px 25px rgba(13,54,88,.09);border:1px solid #dce7f0}.why h4{margin:0 0 16px;color:#0b4f7d;font-size:24px}.why p{margin:0;font-size:18px;line-height:1.7}
+
+    .contact-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:38px}
+    .panel{background:#fff;border-radius:34px;padding:34px;box-shadow:0 10px 25px rgba(13,54,88,.12)}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.field{margin-bottom:18px}.field label{display:block;margin-bottom:8px;font-weight:800;color:#0b4f7d}
+    input,select,textarea{width:100%;padding:18px;border-radius:16px;border:1px solid #c8d9e6;font:inherit} textarea{min-height:160px;resize:vertical}
+    .submit{border:none;background:#18a5e7;color:#fff;padding:18px 34px;border-radius:18px;font-weight:900;font-size:20px;cursor:pointer}
+    .form-status{display:none;margin-top:16px;padding:14px 18px;border-radius:14px;font-weight:800;line-height:1.5}
+    .form-status.success{display:block;background:#e6f7ed;color:#075e2d;border:1px solid #a9e7bf}
+    .form-status.error{display:block;background:#fff1f1;color:#8a1f1f;border:1px solid #ffc2c2}
+    .contact-card{background:#0b4f7d;color:#fff;border-radius:34px;padding:34px;min-height:100%}.contact-card h3{margin-top:0;font-size:32px}.contact-card p{font-size:20px;line-height:1.7}
+    footer{background:#07385b;color:#fff;padding:48px 0}.footer-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.2fr;gap:34px}
+    footer img{height:84px;width:auto;border-radius:24px;background:#fff;padding:10px} footer h4{margin:0 0 18px;font-size:18px} footer a,footer p{color:#fff;text-decoration:none;line-height:2;font-size:18px;margin:0}
+
+    @media (max-width:1000px){.cards,.cards.four,.about-grid,.contact-grid,.footer-grid,.why{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr}}
+    @media (max-width:760px){
+      .nav{padding:10px 0;gap:10px}
+      .nav img{height:58px;border-radius:20px;padding:7px}
+      .menu{display:flex;gap:0;margin-left:auto}
+      .menu a{display:none}
+      .language-switch{display:flex;flex-shrink:0;padding:5px;border-radius:16px}
+      .lang-btn{font-size:14px;padding:8px 10px}
+      .cards,.cards.four,.about-grid,.contact-grid,.footer-grid,.why,.grid2{grid-template-columns:1fr}
+      .stats{grid-template-columns:1fr}
+      .hero{min-height:78vh}
+      .card img{height:230px}
+    }
+
+    /* Final tune: opening popup and cookie notice */
+    .welcome-popup{position:fixed;inset:0;background:rgba(0,0,0,.68);display:none;align-items:center;justify-content:center;z-index:9999;padding:22px}
+    .welcome-popup.show{display:flex}
+    .welcome-popup-box{background:#fff;width:min(760px,94vw);border-radius:30px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.35);position:relative;text-align:center;border:1px solid rgba(255,255,255,.3)}
+    .welcome-popup-box img{width:100%;height:auto;display:block;background:#071d46}
+    .welcome-popup-content{padding:26px 28px 30px;background:linear-gradient(180deg,#fff,#eef7ff)}
+    .welcome-popup-content h2{margin:0 0 10px;color:#0b4f7d;font-size:clamp(30px,4vw,48px);line-height:1;font-weight:900}
+    .blink-text{font-size:clamp(18px,2vw,24px);font-weight:900;margin:0;color:#159eea;text-shadow:none}
+    .popup-close{position:absolute;top:12px;right:14px;width:42px;height:42px;border:0;border-radius:50%;background:rgba(6,27,69,.88);color:#fff;font-size:30px;line-height:40px;cursor:pointer;font-weight:400}
+    .popup-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+    .popup-actions a,.popup-actions button{border:0;border-radius:999px;padding:13px 22px;font-weight:900;font:inherit;cursor:pointer;text-decoration:none}
+    .popup-actions a{background:#159eea;color:#fff}
+    .popup-actions button{background:#0b4f7d;color:#fff}
+    .cookie-box{position:fixed;left:20px;right:20px;bottom:20px;background:#061b45;color:#fff;padding:18px 20px;border-radius:18px;box-shadow:0 18px 50px rgba(0,0,0,.25);z-index:9998;display:none;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;text-align:center}
+    .cookie-box.show{display:flex}
+    .cookie-box button{border:0;background:#159eea;color:#fff;border-radius:999px;padding:11px 20px;font-weight:900;cursor:pointer}
+    @media(max-width:760px){.welcome-popup-content{padding:22px 18px}.cookie-box{left:12px;right:12px;bottom:12px}}
+
+  </style>
+</head>
+<body>
+
+<div id="welcomePopup" class="welcome-popup" aria-hidden="true" onclick="if(event.target===this) closeWelcomePopup()">
+  <div class="welcome-popup-box" role="dialog" aria-modal="true" aria-labelledby="popupTitle">
+    <button class="popup-close" type="button" aria-label="Close popup" onclick="closeWelcomePopup()">×</button>
+    <img src="assets/bonded-warehouse.png" alt="Sai Logistic bonded warehouse">
+    <div class="welcome-popup-content">
+      <h2 id="popupTitle" data-i18n="popupTitle">Bonded Warehouse</h2>
+      <p class="blink-text" data-i18n="popupText">Secure bonded warehouse, customs assistance and reliable logistics support</p>
+      <div class="popup-actions">
+        <a href="#contact" onclick="closeWelcomePopup()" data-i18n="getQuote">Get a Quote</a>
+        <button type="button" onclick="closeWelcomePopup()" data-i18n="continueBtn">Continue</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="cookieBox" class="cookie-box" role="status">
+  <span data-i18n="cookieText">We use cookies to improve your experience on the Sai Logistic website.</span>
+  <button type="button" onclick="acceptSaiCookies()" data-i18n="cookieBtn">Accept Cookies</button>
+</div>
+
+<header>
+  <div class="container nav">
+    <img src="assets/logo.png" alt="Sai Logistic logo">
+    <nav class="menu">
+      <a href="#home" data-i18n="navHome">Home</a><a href="#about" data-i18n="navAbout">About</a><a href="#services" data-i18n="navServices">Services</a><a href="#contact" data-i18n="navContact">Contact</a><div class="language-switch" aria-label="Language selector"><button class="lang-btn active" type="button" data-lang="en">EN</button><button class="lang-btn" type="button" data-lang="nl">NL</button></div>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="home">
+  <div class="container">
+    <h2 class="welcome" data-i18n="welcome">Welcome to Sai Logistic</h2>
+    <h1>Sai Logistic</h1>
+    <p data-i18n="tagline">Your Partner in Streamlined Logistics Solutions</p>
+    <div class="actions"><a class="btn btn-primary" href="#contact" data-i18n="getInTouch">Get in Touch</a><a class="btn btn-secondary" href="#services" data-i18n="ourServices">Our Services</a></div>
+    <div class="stats">
+      <div class="stat"><div class="num">650+</div><div class="label" data-i18n="deliveries">Deliveries</div></div>
+      <div class="stat"><div class="num">20+</div><div class="label" data-i18n="clients">Happy Clients</div></div>
+      <div class="stat"><div class="num">24/7</div><div class="label" data-i18n="service">Service</div></div>
+      <div class="stat"><div class="num">3000+</div><div class="label" data-i18n="warehouseStat">PAL Warehouse</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-white" id="services">
+  <div class="container">
+    <h2 class="section-title" data-i18n="servicesTitle">Specialist Logistics Services</h2>
+    <p class="section-sub" data-i18n="servicesSub">Transportation, storage, stock control and bonded warehouse solutions</p>
+    <div class="banner"><img src="assets/transportation.png" alt="Customized transportation"></div>
+    <div class="cards">
+      <article class="card"><img src="assets/air-transport.png" alt="Air Freight Service"><div class="card-body"><h3 data-i18n="airTitle">Air Freight Service</h3><p data-i18n="airText">Fast, efficient and secure air freight solutions connecting your business to global opportunities.</p></div></article>
+      <article class="card"><img src="assets/sea-transport.png" alt="Sea Transportation"><div class="card-body"><h3 data-i18n="seaTitle">Sea Transportation</h3><p data-i18n="seaText">Global sea freight solutions designed for reliability, efficiency, and seamless delivery across the world.</p></div></article>
+      <article class="card"><img src="assets/land-transport.png" alt="Land Transport"><div class="card-body"><h3 data-i18n="landTitle">Land Transport</h3><p data-i18n="landText">Reliable, flexible and cost-effective land transport tailored to move your business forward.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="section-light" id="about">
+  <div class="container about-grid">
+    <div class="about-copy">
+      <span class="section-tag" data-i18n="aboutTag">About Sai Logistic</span>
+      <h2 class="about-title" data-i18n="aboutTitle">Leading Logistics Solutions in the Netherlands</h2>
+      <p data-i18n="about1">Sai Logistic was established in 2020. Since our inception, we have expanded fast and are now one of the leading logistics firms in the Netherlands.</p>
+      <p data-i18n="about2">We are committed to reliable logistics, warehousing, stock control, storage and transportation solutions tailored to our clients.</p>
+      <p data-i18n="about3">We continue investing in people, technology and infrastructure to provide efficient and professional service.</p>
+    </div>
+    <div class="about-panel">
+      <img src="assets/warehouse-wide.png" alt="Sai Logistic warehouse">
+      <div class="about-mini"><div class="mini dark"><div style="font-size:56px">650+</div>Deliveries</div><div class="mini light"><div style="font-size:56px">20+</div>Clients</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-white">
+  <div class="container">
+    <h2 class="section-title" data-i18n="completeTitle">Complete Logistics Solutions</h2>
+    <p class="section-sub" data-i18n="completeSub">Together, we have your logistical challenges covered</p>
+    <div class="cards four">
+      <article class="card"><img src="assets/stock-control.png" alt="Stock Control & Order Picking"><div class="card-body"><h3 data-i18n="stockTitle">Stock Control & Order Picking</h3><p data-i18n="stockText">Accurate inventory management and efficient order picking tailored to your business needs.</p></div></article>
+      <article class="card"><img src="assets/secure-storage.png" alt="Secure Storage"><div class="card-body"><h3 data-i18n="storageTitle">Secure Storage</h3><p data-i18n="storageText">Safe, secure and scalable storage solutions tailored to protect your inventory.</p></div></article>
+      <article class="card"><img src="assets/bonded-warehouse.png" alt="Bonded Warehouse"><div class="card-body"><h3 data-i18n="bondedTitle">Bonded Warehouse</h3><p data-i18n="bondedText">End-to-end bonded warehousing and customs assistance for smooth, compliant operations.</p></div></article>
+      <article class="card"><img src="assets/racking.png" alt="Warehouse Racking"><div class="card-body"><h3 data-i18n="rackingTitle">Warehouse Racking</h3><p data-i18n="rackingText">Professional warehouse handling and storage with organized racking and operational support.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="section-light">
+  <div class="container">
+    <h2 class="section-title" data-i18n="galleryTitle">Warehouse Gallery</h2>
+    <p class="section-sub" data-i18n="gallerySub">Modern warehouse space for reliable stock handling</p>
+    <div class="cards">
+      <article class="card"><img src="assets/warehouse-grid.png" alt="Warehouse gallery"></article>
+      <article class="card"><img src="assets/warehouse-aisle.png" alt="Warehouse aisle"></article>
+      <article class="card"><img src="assets/warehouse.png" alt="Warehouse"></article>
+    </div>
+  </div>
+</section>
+
+<section class="section-white">
+  <div class="container">
+    <h2 class="section-title" data-i18n="whyTitle">Why Choose Us?</h2>
+    <p class="section-sub" data-i18n="whySub">Professional logistics support with reliable service</p>
+    <div class="why">
+      <div class="item"><h4 data-i18n="why1Title">Reliable Delivery</h4><p data-i18n="why1Text">We focus on safe, secure and on-time delivery across transport and storage operations.</p></div>
+      <div class="item"><h4 data-i18n="why2Title">Flexible Solutions</h4><p data-i18n="why2Text">Services can be tailored around your logistics, warehousing and stock control requirements.</p></div>
+      <div class="item"><h4 data-i18n="why3Title">Secure Storage</h4><p data-i18n="why3Text">Storage solutions designed to protect goods and support business growth.</p></div>
+      <div class="item"><h4 data-i18n="why4Title">Dedicated Support</h4><p data-i18n="why4Text">Clear communication and practical support for every customer.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-white" id="contact">
+  <div class="container contact-grid">
+    <div class="panel">
+      <h2 class="section-title" style="text-align:left;font-size:48px" data-i18n="contactTitle">Get In Touch</h2>
+      <p style="font-size:22px;margin-top:0" data-i18n="contactIntro">Let's discuss how we can tailor our services to meet your unique needs.</p>
+      <form id="contactForm">
+        <div class="grid2"><div class="field"><label data-i18n="nameLabel">Your Name *</label><input id="contactName" name="name" autocomplete="name" required></div><div class="field"><label data-i18n="phoneLabel">Phone Number *</label><input id="contactPhone" name="phone" autocomplete="tel" required></div></div>
+        <div class="grid2"><div class="field"><label data-i18n="emailLabel">Email Address *</label><input id="contactEmail" name="email" type="email" autocomplete="email" required></div><div class="field"><label data-i18n="freightLabel">Freight Type</label><select id="contactFreight" name="freight"><option>Select</option><option>Air Freight</option><option>Sea Transport</option><option>Land Transport</option><option>Warehouse</option></select></div></div>
+        <div class="grid2"><div class="field"><label data-i18n="loadLabel">Load (kg)</label><input id="contactLoad" name="load"></div><div class="field"><label data-i18n="distanceLabel">Distance (km)</label><input id="contactDistance" name="distance"></div></div>
+        <div class="field"><label data-i18n="messageLabel">Message</label><textarea id="contactMessage" name="message" placeholder="Tell us about your logistics needs..." data-i18n-placeholder="messagePlaceholder"></textarea></div>
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <input type="hidden" name="_subject" value="New enquiry from Sailogistic website">
+        <input type="hidden" name="_cc" value="siva@sailogistic.nl">
+        <button class="submit" type="submit" data-i18n="submitBtn">Send Request</button>
+        <div id="formStatus" class="form-status" aria-live="polite"></div>
+      </form>
+    </div>
+    <div class="contact-card">
+      <h3 data-i18n="infoTitle">Contact Information</h3>
+      <p><strong data-i18n="officeLabel">Office Address</strong><br>Blankenweg 18 B<br>Bergen op Zoom 4612 RC<br>Netherlands</p>
+      <p><strong data-i18n="phoneLabel2">Phone Number</strong><br>+31 6 41145872</p>
+      <p><strong>Email</strong><br>sai@sailogistic.nl<br>siva@sailogistic.nl</p>
+      <p><strong data-i18n="hoursLabel">Open Hours</strong><br>Mon-Fri: 9AM to 6PM</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-grid">
+    <div><img src="assets/logo.png" alt="Sai Logistic logo"><p style="margin-top:14px">Your Partner in Streamlined Logistics Solutions</p></div>
+    <div><h4 data-i18n="quickLinks">Quick Links</h4><a href="#home" data-i18n="navHome">Home</a><br><a href="#about" data-i18n="navAbout">About</a><br><a href="#services" data-i18n="navServices">Services</a><br><a href="#contact" data-i18n="navContact">Contact</a></div>
+    <div><h4 data-i18n="navServices">Services</h4><p>Air Freight</p><p>Sea Transportation</p><p>Land Transport</p><p>Warehouse Solutions</p></div>
+    <div><h4 data-i18n="contactInfo">Contact Info</h4><p>Blankenweg 18 B, Bergen op Zoom 4612 RC</p><p>+31 6 41145872</p><p>© 2026 Sai Logistic. All rights reserved.</p></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const popup = document.getElementById('welcomePopup');
+  const cookieBox = document.getElementById('cookieBox');
+
+  window.closeWelcomePopup = function(){
+    if(popup){
+      popup.classList.remove('show');
+      popup.setAttribute('aria-hidden','true');
+    }
+  };
+
+  window.acceptSaiCookies = function(){
+    try{ localStorage.setItem('saiCookiesAccepted','yes'); }catch(e){}
+    if(cookieBox){ cookieBox.classList.remove('show'); }
+  };
+
+  function getValue(id){
+    const el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+  }
+
+  function setupContactForm(){
+    const form = document.getElementById('contactForm');
+    const status = document.getElementById('formStatus');
+    if(!form) return;
+
+    function currentLang(){
+      try{ return localStorage.getItem('saiLanguage') || 'en'; }catch(e){ return 'en'; }
+    }
+
+    function statusText(type){
+      const lang = currentLang();
+      const nl = translations && translations.nl ? translations.nl : {};
+      const messages = {
+        sending: lang === 'nl' ? (nl.formSending || 'Verzenden...') : 'Sending...',
+        success: lang === 'nl' ? (nl.formSuccess || 'Bedankt. Uw aanvraag is verzonden.') : 'Thank you. Your request has been sent. We will contact you as soon as possible.',
+        error: lang === 'nl' ? (nl.formError || 'Sorry, het verzenden is mislukt. Bel ons of stuur een e-mail naar sai@sailogistic.nl.') : 'Sorry, the message could not be sent. Please call us or email sai@sailogistic.nl.'
+      };
+      return messages[type];
+    }
+
+    function showStatus(type, message){
+      if(!status) return;
+      status.className = 'form-status ' + (type || '');
+      status.textContent = message || '';
+    }
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if(!form.checkValidity()){
+        form.reportValidity();
+        return;
+      }
+
+      const submitBtn = form.querySelector('.submit');
+      const originalBtnText = submitBtn ? submitBtn.textContent : '';
+      if(submitBtn){
+        submitBtn.disabled = true;
+        submitBtn.textContent = statusText('sending');
+      }
+      showStatus('', '');
+
+      const formData = new FormData(form);
+      formData.append('Submitted from', window.location.href);
+      formData.append('_captcha', 'false');
+      formData.append('_template', 'table');
+
+      fetch('https://formsubmit.co/ajax/sai@sailogistic.nl', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: formData
+      })
+      .then(function(response){
+        if(!response.ok){ throw new Error('Form submit failed'); }
+        return response.json();
+      })
+      .then(function(){
+        form.reset();
+        showStatus('success', statusText('success'));
+      })
+      .catch(function(){
+        showStatus('error', statusText('error'));
+      })
+      .finally(function(){
+        if(submitBtn){
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalBtnText;
+        }
+      });
+    });
+  }
+
+  const translations = {
+    nl: {
+      navHome:'Home',
+      navAbout:'Over ons',
+      navServices:'Diensten',
+      navContact:'Contact',
+      welcome:'Welkom bij Sai Logistic',
+      tagline:'Uw Partner in Slimme en Betrouwbare Logistieke Oplossingen',
+      getInTouch:'Neem Contact Op',
+      ourServices:'Onze Diensten',
+      deliveries:'Leveringen',
+      clients:'Tevreden Klanten',
+      service:'Service',
+      warehouseStat:'3000+ PAL Magazijncapaciteit',
+      servicesTitle:'Onze Diensten',
+      servicesSub:'Complete logistieke ondersteuning voor uw bedrijf',
+      airTitle:'Luchtvracht',
+      airText:'Snelle, veilige en efficiënte luchtvrachtoplossingen waarmee uw goederen wereldwijd op tijd aankomen.',
+      seaTitle:'Zeevracht',
+      seaText:'Betrouwbare zeevrachtservices voor internationale verzendingen, met focus op efficiëntie en zorgeloze levering.',
+      landTitle:'Wegtransport',
+      landText:'Flexibel en kosteneffectief wegtransport binnen Nederland en Europa, afgestemd op uw logistieke behoeften.',
+      aboutTag:'Over Sai Logistic',
+      aboutTitle:'Betrouwbare logistieke partner in Nederland',
+      about1:'Sai Logistic is opgericht in 2020 en heeft zich in korte tijd ontwikkeld tot een betrouwbare speler binnen de logistieke sector in Nederland.',
+      about2:'Wij zijn gespecialiseerd in transportoplossingen, magazijnbeheer, voorraadbeheer, opslagdiensten en douane-entrepot oplossingen.',
+      about3:'Door continu te investeren in mensen, technologie en infrastructuur kunnen wij onze klanten professionele en efficiënte logistieke ondersteuning bieden.',
+      completeTitle:'Onze Logistieke Oplossingen',
+      completeSub:'Samen maken we logistiek eenvoudiger',
+      stockTitle:'Voorraadbeheer & Orderpicking',
+      stockText:'Nauwkeurig voorraadbeheer en efficiënte orderverwerking afgestemd op uw bedrijfsprocessen.',
+      storageTitle:'Veilige Opslag',
+      storageText:'Moderne en veilige opslagruimtes voor tijdelijke of langdurige opslag van uw goederen.',
+      bondedTitle:'Douane-entrepot',
+      bondedText:'Complete ondersteuning voor douaneopslag en douaneformaliteiten voor een snelle en conforme afhandeling.',
+      rackingTitle:'Magazijnrekken & Handling',
+      rackingText:'Professionele magazijninrichting en handling met georganiseerde opslag en operationele ondersteuning.',
+      galleryTitle:'Magazijngalerij',
+      gallerySub:'Moderne magazijnfaciliteiten voor veilig en efficiënt voorraadbeheer',
+      whyTitle:'Waarom Kiezen Voor Sai Logistic?',
+      whySub:'Betrouwbare logistieke ondersteuning met persoonlijke service',
+      why1Title:'Betrouwbare Leveringen',
+      why1Text:'Wij zorgen voor veilige en tijdige leveringen bij iedere zending.',
+      why2Title:'Flexibele Oplossingen',
+      why2Text:'Onze diensten worden volledig afgestemd op uw logistieke wensen en bedrijfsdoelen.',
+      why3Title:'Veilige Opslag',
+      why3Text:'Uw goederen worden opgeslagen in een veilige en goed beheerde omgeving.',
+      why4Title:'Persoonlijke Service',
+      why4Text:'Wij geloven in duidelijke communicatie, snelle ondersteuning en persoonlijke aandacht voor iedere klant.',
+      contactTitle:'Neem Contact Op',
+      contactIntro:'Heeft u vragen of bent u op zoek naar een logistieke oplossing op maat? Neem gerust contact met ons op. Ons team staat klaar om u te helpen.',
+      nameLabel:'Uw Naam *',
+      phoneLabel:'Telefoonnummer *',
+      emailLabel:'E-mailadres *',
+      freightLabel:'Type Vracht',
+      loadLabel:'Gewicht (kg)',
+      distanceLabel:'Afstand (km)',
+      messageLabel:'Bericht',
+      messagePlaceholder:'Vertel ons over uw logistieke behoeften...',
+      submitBtn:'Verstuur Aanvraag',
+      formSending:'Verzenden...',
+      formSuccess:'Bedankt. Uw aanvraag is verzonden. Wij nemen zo snel mogelijk contact met u op.',
+      formError:'Sorry, het verzenden is mislukt. Bel ons of stuur een e-mail naar sai@sailogistic.nl.',
+      infoTitle:'Contactinformatie',
+      officeLabel:'Adres',
+      phoneLabel2:'Telefoon',
+      hoursLabel:'Openingstijden',
+      quickLinks:'Snelle links',
+      contactInfo:'Contactinformatie',
+      popupTitle:'Douane-entrepot',
+      popupText:'Veilige douaneopslag, douaneformaliteiten en betrouwbare logistieke ondersteuning',
+      getQuote:'Vraag offerte aan',
+      continueBtn:'Doorgaan',
+      cookieText:'Wij gebruiken cookies om uw ervaring op de Sai Logistic website te verbeteren.',
+      cookieBtn:'Cookies accepteren'
+    }
+  };
+
+  const originalText = {};
+  const originalPlaceholders = {};
+
+  function setupLanguageSwitch(){
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      const key = el.getAttribute('data-i18n');
+      if(!(key in originalText)){ originalText[key] = el.textContent; }
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
+      const key = el.getAttribute('data-i18n-placeholder');
+      if(!(key in originalPlaceholders)){ originalPlaceholders[key] = el.getAttribute('placeholder') || ''; }
+    });
+
+    function applyLanguage(lang){
+      document.documentElement.lang = lang;
+      document.querySelectorAll('.lang-btn').forEach(function(btn){
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+
+      document.querySelectorAll('[data-i18n]').forEach(function(el){
+        const key = el.getAttribute('data-i18n');
+        el.textContent = lang === 'nl' ? (translations.nl[key] || originalText[key] || el.textContent) : (originalText[key] || el.textContent);
+      });
+
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
+        const key = el.getAttribute('data-i18n-placeholder');
+        el.setAttribute('placeholder', lang === 'nl' ? (translations.nl[key] || originalPlaceholders[key] || '') : (originalPlaceholders[key] || ''));
+      });
+
+      try{ localStorage.setItem('saiLanguage', lang); }catch(e){}
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){ applyLanguage(btn.getAttribute('data-lang')); });
+    });
+
+    let saved = 'en';
+    try{ saved = localStorage.getItem('saiLanguage') || 'en'; }catch(e){}
+    applyLanguage(saved);
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    setupContactForm();
+    setupLanguageSwitch();
+
+    if(popup){
+      setTimeout(function(){
+        popup.classList.add('show');
+        popup.setAttribute('aria-hidden','false');
+      }, 450);
+    }
+    try{
+      if(localStorage.getItem('saiCookiesAccepted') !== 'yes' && cookieBox){
+        cookieBox.classList.add('show');
+      }
+    }catch(e){
+      if(cookieBox){ cookieBox.classList.add('show'); }
+    }
+  });
+
+
+  window.addEventListener('pageshow', function(){
+    if(typeof setupLanguageSwitch === 'function'){
+      setupLanguageSwitch();
+    }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){ window.closeWelcomePopup(); }
+  });
+})();
+</script>
+</body>
+</html>
